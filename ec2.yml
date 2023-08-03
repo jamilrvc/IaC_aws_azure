@@ -1,0 +1,32 @@
+- name: Create a new Demo EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+      region: eu-east-1
+      instance_type: t2.micro
+      ami: ami-0f34c5ae932e6f0e4 # ami-04a0ae173da5807d3  # Ubuntu 20.04 LTS
+      keypair: jamil_init # pem file name
+      subnetid: subnet-0a4b38a4b65e43b8e
+
+  tasks:
+
+    - name: Create an ec2 instance
+      ec2_instance:
+         key_name: "{{ keypair }}"
+         security_group: default  # security group name
+         instance_type: "{{ instance_type }}"
+         image_id: "{{ ami }}"
+         wait: true
+         region: "{{ region }}"
+         count: 1  # default
+         tags:
+           ansible_course: bestcourseever
+         vpc_subnet_id: "{{ subnetid }}"
+         network:
+           assign_public_ip: yes
+      register: ec2
+
+      #- name: show output
+      #      debug:subnet-0a4b38a4b65e43b8e"
