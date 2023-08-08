@@ -8,6 +8,7 @@ terraform.tfstate*
 
 #dev files
 .env
+.venv
 backend.hcl
 
 #Webstorm
